@@ -134,3 +134,33 @@ dist
 
 # IDE project settings (example: WebStorm)
 .idea/
+
+
+# Python-related files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.db
+*.sqlite
+*.sqlite3
+*.log
+
+# Virtual Environment
+venv/
+.venv/
+env/
+env.bak/
+env1/
+venv1/
+venv2/
+.venv2/
+.venv3/
+
+# Pipenv
+Pipfile.lock
+
+# Streamlit-specific
+.streamlit/
+*.session
