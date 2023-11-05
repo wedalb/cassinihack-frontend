@@ -4,7 +4,13 @@ from constants import map_width, map_height
 from streamlit_lottie import st_lottie
 import streamlit as st
 import streamlit.components.v1 as components
+from keplergl import KeplerGl
+import pandas as pd
+import numpy as np
+import pydeck as pdk
 
+import pandas as pd
+import pydeck as pdk
 
 
 st.set_page_config(
@@ -22,7 +28,6 @@ st.markdown("""
                 }
         </style>
         """, unsafe_allow_html=True)
-
 # Add a smaller header with a wider shape, smaller "Concast" text, and smaller overlapping rectangular shape with 50% opacity
 header_html = """
     <style>
@@ -72,27 +77,62 @@ st.markdown(header_html, unsafe_allow_html=True)
 
 
 
+#------------------------------------------------------------------------------------------------------------------------
+chart_data = pd.DataFrame(
+   np.random.randn(1000, 2) / [50, 50] + [50.4501, 30.5234],
+   columns=['lat', 'lon'])
+
+st.pydeck_chart(pdk.Deck(
+    map_style=None,
+    initial_view_state=pdk.ViewState(
+        latitude=50.4501,
+        longitude=30.5234,
+        zoom=11,
+        pitch=50,
+    ),
+    layers=[
+        pdk.Layer(
+           'HexagonLayer',
+           data=chart_data,
+           get_position='[lon, lat]',
+           radius=200,
+           elevation_scale=4,
+           elevation_range=[0, 1000],
+           pickable=True,
+           extruded=True,
+        ),
+        pdk.Layer(
+            'ScatterplotLayer',
+            data=chart_data,
+            get_position='[lon, lat]',
+            get_color='[200, 30, 0, 160]',
+            get_radius=200,
+        ),
+    ],
+))
+
+#------------------------------------------------------------------------------------------------------------------------
 
 
 # Map here
-with st.container():
-    config = {
-        "version": "v1",
-        "config": {
-            "mapState": {
-                "bearing": 0,
-                "latitude": 50.4501,  # Default latitude (Berlin, for example)
-                "longitude":  30.5234,  # Default longitude (Berlin, for example)
-                "pitch": 0,
-                "zoom": 12,
-            }
-        },
-    }
-    map_1 = KeplerGl(
-        height=map_height,
-        width=map_width)
-    map_1.config = config
-    keplergl_static(map_1)
+#with st.container():
+#    config = {
+#       "version": "v1",
+#        "config": {
+#           "mapState": {
+#               "bearing": 0,
+#               "latitude": 50.4501,  # Default latitude (Berlin, for example)
+#               "longitude":  30.5234,  # Default longitude (Berlin, for example)
+#               "pitch": 0,
+#               "zoom": 12,
+##           }
+#      },
+#   }
+#   map_1 = KeplerGl(
+#       height=map_height,
+#       width=map_width)
+#   map_1.config = config
+#   keplergl_static(map_1)
 
 #SLIDER
 st.markdown("""
