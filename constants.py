@@ -1,10 +1,9 @@
 
 
-
-
 # Set the desired width and height for the map
 map_width = 1000  # Set your preferred width in pixels
 map_height = 700  # Set your preferred height in pixels
+
 
 
 european_cities = [
