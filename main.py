@@ -1,4 +1,3 @@
-from geopy import Nominatim
 from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
 from constants import map_width, map_height
@@ -68,7 +67,6 @@ header_html = """
 
 st.markdown(header_html, unsafe_allow_html=True)
 
-geolocator = Nominatim(user_agent="city_geocoder")
 
 
 
