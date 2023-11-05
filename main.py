@@ -57,7 +57,7 @@ header_html = """
             color: red;
         }
     </style>
-    <div style="display: flex; justify-content: space-between; align-items: center; padding: 5px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px 5px 5px;">
         <div style="display: flex; align-items: center; position: relative;">
             <div class="cool-shape"></div>
             <div class="overlay-shape"></div>
@@ -166,9 +166,11 @@ with st.sidebar:
     # Inject button styles to Streamlit
     st.markdown(button_style, unsafe_allow_html=True)
 
+    st.caption("Make predictions about the future population under different scenarios")
+
     # Create buttons
     st.markdown('<button class="custom-button war">What happens in an event of war?</button>', unsafe_allow_html=True)
     st.markdown('<button class="custom-button disaster">What happens during natural disaster?</button>', unsafe_allow_html=True)
-    st.markdown('<button class="custom-button drought">What happens if there is a drought?</button>', unsafe_allow_html=True)
+    st.markdown('<button class="custom-button drought">What effects does climate change have?</button>', unsafe_allow_html=True)
 
 #openai.api_key = st.secrets["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"]
