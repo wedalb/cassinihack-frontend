@@ -3,6 +3,7 @@ from streamlit_keplergl import keplergl_static
 from keplergl import KeplerGl
 from constants import map_width, map_height
 from streamlit_lottie import st_lottie
+from geopy.geocoders import Nominatim
 
 st.set_page_config(
     page_title="Concast",
@@ -20,13 +21,7 @@ st.markdown("""
         </style>
         """, unsafe_allow_html=True)
 
-
-# Read the content of the HTML file
-#with open("./components/navbar.html", "r") as f:
-#    navbar_content = f.read()
-
-# Render the HTML content using components.html
-#components.html(navbar_content)
+geolocator = Nominatim(user_agent="city_geocoder")
 
 # Map here
 with st.container():
@@ -35,8 +30,8 @@ with st.container():
         "config": {
             "mapState": {
                 "bearing": 0,
-                "latitude": 50.450001,
-                "longitude": 30.523333,
+                "latitude": 52.5200,  # Default latitude (Berlin, for example)
+                "longitude": 13.4050,  # Default longitude (Berlin, for example)
                 "pitch": 0,
                 "zoom": 12,
             }
@@ -55,7 +50,6 @@ st.markdown("""
         padding-bottom: 0px; 
         padding-right: 30px; 
         padding-left: 30px;
-
     }
 </style>
 """, unsafe_allow_html=True)
@@ -70,10 +64,21 @@ selected_year = st.slider(
     label_visibility="collapsed")
 
 with st.sidebar:
-
-    st.text_input(
+    city_name = st.text_input(
         label="Search for your location",
         placeholder="City"
     )
-    st_lottie("https://lottie.host/9e9250cc-836c-474e-a4e9-341c417ec652/XJGAWkauNG.json")
 
+    if city_name:
+        try:
+            location = geolocator.geocode(city_name)
+            if location:
+                map_1.config["config"]["mapState"]["latitude"] = location.latitude
+                map_1.config["config"]["mapState"]["longitude"] = location.longitude
+                st.write(f"Map updated for {city_name}: Lat {location.latitude}, Lon {location.longitude}")
+            else:
+                st.write("City not found. Please try another city.")
+        except Exception as e:
+            st.write(f"An error occurred: {e}")
+
+    st_lottie("https://lottie.host/9e9250cc-836c-474e-a4e9-341c417ec652/XJGAWkauNG.json")
