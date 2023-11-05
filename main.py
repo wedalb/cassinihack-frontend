@@ -3,6 +3,8 @@ from keplergl import KeplerGl
 from constants import map_width, map_height
 from streamlit_lottie import st_lottie
 import streamlit as st
+import streamlit.components.v1 as components
+
 
 
 st.set_page_config(
@@ -144,6 +146,9 @@ button_style = """
     }
 </style>
 """
+
+
+
 
 with st.sidebar:
     city_name = st.text_input(
