@@ -4,6 +4,7 @@ from constants import map_width, map_height
 from streamlit_lottie import st_lottie
 import streamlit as st
 
+
 st.set_page_config(
     page_title="Concast",
     page_icon="❇️",
@@ -112,29 +113,57 @@ selected_year = st.slider(
     step=1,
     label_visibility="collapsed")
 
-# -------------------------------------
+# ---------------------------------------------------------------------------------------------------------------
+button_style = """
+<style>
+    .custom-button {
+        color: white; /* Change font color to black */
+        font-size: 16px; /* Change font size to 16px */
+        padding: 10px 20px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s, transform 0.1s;
+        border-radius: 10px;
+        font-family: 'Montserrat', sans-serif; /* Change font family to Montserrat */
+    }
+    .custom-button.war {
+        background-color: #256345;
 
+    }
+    .custom-button.disaster {
+        background-color: #3b6b5d;
+    }
+    .custom-button.drought {
+        background-color: #225c49;
+    }
+    .custom-button:hover {
+        background-color: #26926B;
+    }
+    .custom-button:active {
+        transform: scale(0.95);
+    }
+</style>
+"""
 
 with st.sidebar:
     city_name = st.text_input(
         label="Search for your location",
         placeholder="City"
     )
+    col1, col2 = st.columns(2)
+    with col2:
+        # Create a button to update the map
+        st.button("Update Map")
 
-    # Create a button to update the map
-    if st.button("Update Map"):
-        if city_name:
-            try:
-                location = geolocator.geocode(city_name)
-                if location:
-                    map_1.config["config"]["mapState"]["latitude"] = location.latitude
-                    map_1.config["config"]["mapState"]["longitude"] = location.longitude
-                    st.write(f"Map updated for {city_name}: Lat {location.latitude}, Lon {location.longitude}")
-                else:
-                    st.write("City not found. Please try another city.")
-            except Exception as e:
-                st.write(f"An error occurred: {e}")
 
-    st_lottie("https://lottie.host/9e9250cc-836c-474e-a4e9-341c417ec652/XJGAWkauNG.json", key="lottie_animation")
+    st_lottie("https://lottie.host/7ca66b6f-e37e-43bd-b6f9-a559c7beef10/LI5QEy8pgB.json")
+
+    # Inject button styles to Streamlit
+    st.markdown(button_style, unsafe_allow_html=True)
+
+    # Create buttons
+    st.markdown('<button class="custom-button war">What happens in an event of war?</button>', unsafe_allow_html=True)
+    st.markdown('<button class="custom-button disaster">What happens during natural disaster?</button>', unsafe_allow_html=True)
+    st.markdown('<button class="custom-button drought">What happens if there is a drought?</button>', unsafe_allow_html=True)
 
 #openai.api_key = st.secrets["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"]
